@@ -11,9 +11,6 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
-import io.netty.channel.epoll.Epoll;
-import io.netty.channel.epoll.EpollEventLoopGroup;
-import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
@@ -88,10 +85,10 @@ public class ControlServer implements Runnable {
     }
 
     private EventLoopGroup eventLoopGroup() {
-        return Epoll.isAvailable() ? new EpollEventLoopGroup() : new NioEventLoopGroup();
+        return new NioEventLoopGroup();
     }
 
     private Class<? extends ServerSocketChannel> serverSocketChannelClass() {
-        return Epoll.isAvailable() ? EpollServerSocketChannel.class : NioServerSocketChannel.class;
+        return NioServerSocketChannel.class;
     }
 }
